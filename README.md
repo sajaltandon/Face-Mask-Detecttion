@@ -13,4 +13,3 @@ About the Dataset
 * Get the dataset from: https://www.kaggle.com/datasets/omkargurav/face-mask-dataset
 
 
-https://mymapit.in/#/rapidTest/374603689/userDetails?candidate=bfbd228f7f779f9d94dca5998a1e14e&sessionId=16409099&email=st2891@srmist.edu.in
