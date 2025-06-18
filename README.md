@@ -1,21 +1,43 @@
+import os
+import langgraph
+from langgraph.graph import StateGraph, END
+from langchain.llms import OpenAI
 
-# Face-Mask-Detection
-Created a Face Mask Detection system using Convolutional Neural Network (CNN)
+# Set LM Studio endpoint
+os.environ["OPENAI_API_KEY"] = "lm-studio"
+os.environ["OPENAI_API_BASE"] = "http://localhost:1234/v1"
 
-Overview
---------
-* Predicts of the given subject is wearing a mask or not.
-* Trained on 7500+ images.
+# Load your local LLM (Mistral or any model running in LM Studio)
+llm = OpenAI(model_name="TheBloke/Mistral-7B-Instruct-v0.1-GGUF", temperature=0)
 
-About the Dataset
---------
-* Data set consists of 7553 RGB images in 2 folders as with_mask and without_mask. Images are named as label with_mask and without_mask. Images of faces with mask are 3725 and images of faces without mask are 3828.
-* Get the dataset from: https://www.kaggle.com/datasets/omkargurav/face-mask-dataset
+# Step 1: Define the state (memory structure)
+def starter_node(state):
+    print("🟢 Start Node")
+    return {"question": "What is the capital of India?"}
 
+# Step 2: Define a node that uses LLM to answer
+def responder_node(state):
+    print("🤖 Responder Node")
+    question = state["question"]
+    answer = llm(question)
+    return {"question": question, "answer": answer}
 
-Machine Learning Fundamental of Python Machine Learning
+# Step 3: Create the graph
+graph = StateGraph()
 
-Artificial Intelligence Essentials - GAN, CNN, MLP, Python
+# Add nodes
+graph.add_node("start", starter_node)
+graph.add_node("responder", responder_node)
 
-PYTHON: Python Programming - From Basics to Data Analysis
+# Add edges
+graph.set_entry_point("start")
+graph.add_edge("start", "responder")
+graph.add_edge("responder", END)
+
+# Compile
+app = graph.compile()
+
+# Step 4: Run the graph
+final_output = app.invoke({})
+print("✅ Final Output:\n", final_output)
 
