@@ -15,3 +15,7 @@ About the Dataset
 
 Machine Learning Fundamental of Python Machine Learning
 
+Artificial Intelligence Essentials - GAN, CNN, MLP, Python
+
+PYTHON: Python Programming - From Basics to Data Analysis
+
